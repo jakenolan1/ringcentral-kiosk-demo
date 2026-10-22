@@ -42,8 +42,7 @@ window.CONTENT = {
     eyebrow: "Product demos",
     title: "Your Recommendations",
     subtitle: "Based off your selections, we’ve recommended {count} product demos for you.",
-    count: 3, // how many products to recommend
-    learnMore: ["Learn", "more"],
+    count: 6, // how many products appear in the carousel, best match first
     edit: "Edit",
     share: "Share",
   },
@@ -176,24 +175,65 @@ window.CONTENT = {
       score: { video: 3, messaging: 1, webinar: 1, ai: 1, xs: 1, sm: 1 },
     },
     {
-      id: "webinar",
-      name: "RingCentral Webinar",
-      tagline: "Engaging virtual events at scale", // PLACEHOLDER
+      id: "events",
+      name: "RingCentral Events",
+      tagline: "Virtual, hybrid, and in-person events", // PLACEHOLDER
       card: "assets/img/workspace.jpg",
       hero: "assets/img/workspace.jpg",
-      description: "Host webinars for thousands with registration, live Q&A, polls, and analytics, all from the same app your team already uses.", // PLACEHOLDER
-      tags: ["Webinars", "Live Q&A", "Event analytics"], // PLACEHOLDER
+      description: "Run webinars, virtual conferences, and hybrid events from one platform, with registration, onsite check-in, live engagement, and analytics built in.", // PLACEHOLDER
+      tags: ["Webinars", "Hybrid events", "Event analytics"], // PLACEHOLDER
       features: [ // PLACEHOLDER
-        { icon: "device", text: "Branded registration pages" },
-        { icon: "mic", text: "Live polls and Q&A" },
-        { icon: "grid", text: "Practice sessions and backstage" },
+        { icon: "device", text: "Branded registration and event pages" },
+        { icon: "mic", text: "Live polls, Q&A, and chat" },
+        { icon: "grid", text: "Onsite check-in and badge printing" },
         { icon: "wave", text: "Attendee engagement analytics" },
-        { icon: "headset", text: "Up to 10,000 attendees" },
+        { icon: "headset", text: "Backstage and practice sessions" },
       ],
       plans: [ // PLACEHOLDER
         { name: "RingCentral Webinar", price: "$59", was: "$79", unit: "/host/month* paid annually", body: "Webinars for up to 10,000 attendees" },
+        { name: "RingCentral Events", price: "Custom", was: "", unit: "pricing for your event", body: "Virtual, hybrid, and in-person events with full production support" },
       ],
       score: { webinar: 3, video: 1, sales: 1, lg: 1, xl: 1 },
+    },
+    {
+      id: "ringsense",
+      name: "RingSense AI",
+      tagline: "Turn every conversation into insight", // PLACEHOLDER
+      card: "assets/img/laptop-steps.jpg",
+      hero: "assets/img/laptop-steps.jpg",
+      description: "Conversation intelligence that transcribes, summarizes, and scores every call and meeting, so sales and service teams know exactly what to do next.", // PLACEHOLDER
+      tags: ["Conversation intelligence", "AI summaries", "Coaching"], // PLACEHOLDER
+      features: [ // PLACEHOLDER
+        { icon: "mic", text: "Automatic transcripts and summaries" },
+        { icon: "wave", text: "Sentiment and keyword tracking" },
+        { icon: "grid", text: "Coaching scorecards" },
+        { icon: "device", text: "CRM notes written for you" },
+        { icon: "headset", text: "Works across calls and meetings" },
+      ],
+      plans: [ // PLACEHOLDER
+        { name: "RingSense AI", price: "$60", was: "$75", unit: "/user/month* paid annually", body: "AI insights for every customer conversation" },
+      ],
+      score: { ai: 3, sales: 2, "contact-center": 1, custom: 1, sm: 1, md: 1 },
+    },
+    {
+      id: "air",
+      name: "RingCentral AI Receptionist",
+      tagline: "Never miss a call again", // PLACEHOLDER
+      card: "assets/img/laptop-orange.jpg",
+      hero: "assets/img/laptop-peach.jpg",
+      description: "A natural-sounding AI agent that answers every call, books appointments, and routes callers to the right person, day or night.", // PLACEHOLDER
+      tags: ["AI agent", "24/7 call answering", "Smart routing"], // PLACEHOLDER
+      features: [ // PLACEHOLDER
+        { icon: "headset", text: "Answers every call, around the clock" },
+        { icon: "mic", text: "Natural, human-sounding voice" },
+        { icon: "grid", text: "Books and reschedules appointments" },
+        { icon: "device", text: "Texts callers a follow-up" },
+        { icon: "wave", text: "Hands off to a person when needed" },
+      ],
+      plans: [ // PLACEHOLDER
+        { name: "AI Receptionist", price: "$59", was: "$79", unit: "/month* for 100 calls", body: "Add an AI receptionist to any RingCentral number" },
+      ],
+      score: { phone: 2, ai: 2, custom: 1, xs: 2, sm: 1 },
     },
   ],
 };

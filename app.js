@@ -126,34 +126,25 @@
     scored.sort((a, b) => b.score - a.score || a.i - b.i);
     state.picks = scored.slice(0, C.recommendations.count).map((s) => s.p);
     $("#reco-sub").textContent = C.recommendations.subtitle.replace("{count}", numberWord(state.picks.length));
-    const lm = C.recommendations.learnMore.map(esc).join("<br>");
     $("#carousel").innerHTML = state.picks.map((p, i) => `
       <button class="card${i === 0 ? " is-active" : ""}" data-action="open-product" data-id="${p.id}">
-        <div class="card-media"><img src="${esc(p.card)}" alt=""></div>
+        <div class="card-media"><img src="${esc(p.card)}" alt="" draggable="false"></div>
         <div class="card-text">
           <p class="card-title">${esc(p.name)}</p>
           <p class="card-tagline">${esc(p.tagline)}</p>
         </div>
-        <span class="learn-more">${lm}</span>
       </button>`).join("");
     $("#carousel").scrollLeft = 0;
   }
 
   const numberWord = (n) => ["zero", "one", "two", "three", "four", "five", "six"][n] || String(n);
 
-  // Snap stops: first card aligns left, last aligns right, the rest center.
+  // Snap stops: each card lines up with the left edge; the last ones settle against the right edge.
   function snapStops() {
     const car = $("#carousel");
-    const cards = $$(".card", car);
     const max = car.scrollWidth - car.clientWidth;
-    const pad = 76;
-    return cards.map((card, i) => {
-      let x;
-      if (i === 0) x = card.offsetLeft - pad;
-      else if (i === cards.length - 1) x = card.offsetLeft + card.offsetWidth - (car.clientWidth - pad);
-      else x = card.offsetLeft + card.offsetWidth / 2 - car.clientWidth / 2;
-      return Math.max(0, Math.min(max, x));
-    });
+    const stops = $$(".card", car).map((card) => Math.max(0, Math.min(max, card.offsetLeft - CAROUSEL_PAD)));
+    return stops.filter((x, i) => i === 0 || x - stops[i - 1] > 1);
   }
 
   function activeIndex() {
@@ -167,10 +158,59 @@
   function updateCarousel() {
     const cards = $$(".card");
     if (!cards.length) return;
+    const stops = snapStops();
     const idx = activeIndex();
     cards.forEach((c, i) => c.classList.toggle("is-active", i === idx));
     $('.screen-reco [data-action="prev"]').disabled = idx === 0;
-    $('.screen-reco [data-action="next"]').disabled = idx === cards.length - 1;
+    $('.screen-reco [data-action="next"]').disabled = idx === stops.length - 1;
+  }
+
+  const CAROUSEL_PAD = 76;
+
+  // Drag with a mouse or pen (touch already scrolls natively). A quick flick carries
+  // on to the next card, then it settles on the nearest stop.
+  function initCarouselDrag() {
+    const car = $("#carousel");
+    let drag = null;
+    let suppressClick = false;
+    car.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "touch" || e.button !== 0) return;
+      drag = { id: e.pointerId, startX: e.clientX, startLeft: car.scrollLeft, lastX: e.clientX, lastT: performance.now(), v: 0, moved: false };
+    });
+    car.addEventListener("pointermove", (e) => {
+      if (!drag) return;
+      const zoom = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--zoom")) || 1;
+      const now = performance.now();
+      const dx = (e.clientX - drag.startX) / zoom;
+      if (!drag.moved && Math.abs(dx) > 6) {
+        drag.moved = true;
+        car.setPointerCapture(drag.id);
+        car.classList.add("is-dragging");
+      }
+      if (!drag.moved) return;
+      car.scrollLeft = drag.startLeft - dx;
+      const dt = Math.max(1, now - drag.lastT);
+      drag.v = 0.8 * (((e.clientX - drag.lastX) / zoom) / dt) + 0.2 * drag.v;
+      drag.lastX = e.clientX;
+      drag.lastT = now;
+    });
+    const end = () => {
+      if (!drag) return;
+      if (!drag.moved) { drag = null; return; }
+      suppressClick = true;
+      const projected = car.scrollLeft - drag.v * 250;
+      const stops = snapStops();
+      const target = stops.reduce((best, x) => (Math.abs(x - projected) < Math.abs(best - projected) ? x : best), stops[0]);
+      drag = null;
+      car.scrollTo({ left: target, behavior: "smooth" });
+      setTimeout(() => car.classList.remove("is-dragging"), 450);
+    };
+    car.addEventListener("pointerup", end);
+    car.addEventListener("pointercancel", end);
+    // A drag that ends over a card shouldn't open it
+    car.addEventListener("click", (e) => {
+      if (suppressClick) { e.stopPropagation(); e.preventDefault(); suppressClick = false; }
+    }, true);
   }
 
   function stepCarousel(dir) {
@@ -445,6 +485,7 @@
   // ---------- Boot ----------
   renderNav();
   renderIntake();
+  initCarouselDrag();
   fit();
   window.addEventListener("resize", fit);
   window.addEventListener("orientationchange", () => setTimeout(fit, 200));
