@@ -241,40 +241,9 @@ p, h1, h2, h3 { margin: 0; font-weight: inherit; }
 }
 .intake-footer .pill { width: 169px; }
 
-/* ---------- Website nav (recommendations + detail) ---------- */
-.site-nav { position: relative; z-index: 5; height: 118px; }
-.site-nav-fixed { position: absolute; left: 0; right: 0; top: 0; }
-.util-bar {
-  height: 34px;
-  background: var(--sand);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 32px;
-  padding: 0 40px;
-  font-size: 14px;
-  line-height: 16px;
-  letter-spacing: 0.1px;
-  color: var(--ink);
-  box-shadow: 0 5px 5px -5px rgba(0,0,0,0.05);
-}
-.util-bar .phone b { font-weight: 500; border-bottom: 1px dashed var(--ink); }
-.util-bar .with-icon { display: inline-flex; align-items: center; gap: 6px; }
-.util-bar img { width: 12px; height: 12px; }
-.util-bar .search { width: 16px; height: 16px; }
-.main-nav { padding: 20px 40px 0; }
-.main-nav-row { display: flex; align-items: center; justify-content: space-between; }
-.main-nav-left { display: flex; align-items: center; }
-.main-nav-left > img { width: 175.7px; height: 38px; }
-.nav-links { display: flex; gap: 48px; margin-left: 48px; margin-top: 4px; color: var(--white); font-weight: 500; font-size: 16px; line-height: 20px; letter-spacing: 0.1px; }
-.nav-links span { display: inline-flex; align-items: center; gap: 8px; }
-.nav-links img { width: 14px; height: 14px; margin-top: 3px; }
-.main-nav .pill { height: 43px; font-family: var(--font-display); }
-.nav-line { height: 1px; margin-top: 20px; background: rgba(255,255,255,0.2); }
-
 /* ---------- 2. Recommendations ---------- */
 .screen-reco { display: flex; flex-direction: column; }
-.reco-head { position: relative; z-index: 1; flex: none; text-align: center; padding-top: 60px; }
+.reco-head { position: relative; z-index: 1; flex: none; text-align: center; padding-top: 178px; }
 .reco-title {
   margin-top: 15px;
   font-family: var(--font-display);
@@ -395,10 +364,12 @@ p, h1, h2, h3 { margin: 0; font-weight: inherit; }
 }
 .d-main { position: sticky; z-index: 1; margin-top: calc(-1 * var(--stage-h)); }
 .d-intro { position: relative; height: calc(var(--stage-h) - 32px); display: flex; align-items: flex-end; padding: 0 0 39px 135px; }
+/* Back arrow, top-left on every screen after the questionnaire (Figma: 40,40) */
 .back-btn {
   position: absolute;
-  left: 136px;
-  top: 134px;
+  z-index: 5;
+  left: 40px;
+  top: 40px;
   width: 40px;
   height: 40px;
   border-radius: 50%;

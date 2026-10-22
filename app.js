@@ -33,30 +33,6 @@
   // ---------- Static copy ----------
   $$("[data-text]").forEach((el) => { el.textContent = get(el.dataset.text); });
 
-  function renderNav() {
-    const n = C.nav;
-    const html = `
-      <div class="util-bar">
-        <span class="phone">${esc(n.phoneLabel)} <b>${esc(n.phone)}</b></span>
-        ${n.utility.map((u) => `<span>${esc(u)}</span>`).join("")}
-        <span class="with-icon">${esc(n.login)} <img src="assets/icons/util-dropdown.svg" alt=""></span>
-        <img class="search" src="assets/icons/search.svg" alt="">
-      </div>
-      <div class="main-nav">
-        <div class="main-nav-row">
-          <div class="main-nav-left">
-            <img src="assets/icons/logo-white.svg" alt="RingCentral">
-            <div class="nav-links">
-              ${n.links.map((l) => `<span>${esc(l.label)}${l.dropdown ? '<img src="assets/icons/nav-dropdown.svg" alt="">' : ""}</span>`).join("")}
-            </div>
-          </div>
-          <button class="pill pill-white" data-action="my-demos">${esc(n.myDemos)}</button>
-        </div>
-        <div class="nav-line"></div>
-      </div>`;
-    $$("[data-nav]").forEach((el) => { el.innerHTML = html; });
-  }
-
   // ---------- Screens ----------
   function show(name) {
     state.screen = name;
@@ -315,7 +291,7 @@
 
   // Layering scroll: the hero stays put while the title and white panel slide over it,
   // the panel then pins in place and the green "questions" section slides over it.
-  const TAGLINE_PINNED_Y = 203; // where the tagline rests once pinned (Figma frame 2)
+  const TAGLINE_PINNED_Y = 192; // where the tagline rests once pinned (Figma frame 2)
   const TITLE_MIN_SCALE = 32 / 56;
   let detailPin = 0;
 
@@ -324,7 +300,7 @@
     const tagline = $("#d-tagline");
     const pinForTitle = TAGLINE_PINNED_Y - offsetWithin(tagline, main);
     const pinForPanel = state.stageH - main.offsetHeight;
-    // Prefer showing the whole panel, but never push the title up under the nav bar.
+    // Prefer showing the whole panel, but keep the title clear of the back arrow.
     detailPin = Math.max(Math.min(pinForTitle, pinForPanel), pinForTitle - 32);
     main.style.top = detailPin + "px";
   }
@@ -410,7 +386,6 @@
       case "next": stepCarousel(1); break;
       case "open-product": renderDetail(C.products.find((p) => p.id === el.dataset.id)); show("detail"); break;
       case "back": show("reco"); break;
-      case "my-demos": if (state.picks.length) show("reco"); break;
       case "plan-prev": stepPlan(-1); break;
       case "plan-next": stepPlan(1); break;
       case "handoff": openModal(C.handoff); break;
@@ -483,7 +458,6 @@
   }
 
   // ---------- Boot ----------
-  renderNav();
   renderIntake();
   initCarouselDrag();
   fit();

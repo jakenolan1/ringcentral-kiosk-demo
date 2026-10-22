@@ -80,21 +80,6 @@ window.CONTENT = {
     timeoutSeconds: 90,
   },
 
-  nav: {
-    phoneLabel: "Sales:",
-    phone: "(877) 768-4369",
-    utility: ["Join a meeting", "Download app", "Support"],
-    login: "Login",
-    links: [
-      { label: "Products", dropdown: true },
-      { label: "Solutions", dropdown: true },
-      { label: "Plans and Pricing" },
-      { label: "Partners", dropdown: true },
-      { label: "Resources", dropdown: true },
-    ],
-    myDemos: "My demos",
-  },
-
   footer: {
     columns: [
       { title: "Products", links: ["Intelligent Phone Systems", "Intelligent Meetings", "Contact Center Solutions", "AI Solutions", "Developers"] },
@@ -128,9 +113,9 @@ window.CONTENT = {
         { icon: "headset", text: "Single sign-on" },
       ],
       plans: [
-        { name: "RingCentral+ Core", price: "$20", was: "$30", unit: "/user/month* paid annually", body: "A reliable, core phone system to get your business up and running" },
-        { name: "RingCentral+ Advanced", price: "$25", was: "$35", unit: "/user/month* paid annually", body: "Advanced call handling and integrations for growing teams" }, // PLACEHOLDER
-        { name: "RingCentral+ Ultra", price: "$35", was: "$45", unit: "/user/month* paid annually", body: "Unlimited storage and analytics for the most demanding teams" }, // PLACEHOLDER
+        { name: "RingCentral MVP Core", price: "$20", was: "$30", unit: "/user/month* paid annually", body: "A reliable, core phone system to get your business up and running" },
+        { name: "RingCentral MVP Advanced", price: "$25", was: "$35", unit: "/user/month* paid annually", body: "Advanced call handling and integrations for growing teams" }, // PLACEHOLDER
+        { name: "RingCentral MVP Ultra", price: "$35", was: "$45", unit: "/user/month* paid annually", body: "Unlimited storage and analytics for the most demanding teams" }, // PLACEHOLDER
       ],
       score: { phone: 3, messaging: 2, video: 1, sales: 1, custom: 1, xs: 1, sm: 1 },
     },
