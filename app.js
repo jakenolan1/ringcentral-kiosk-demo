@@ -403,17 +403,21 @@
   document.addEventListener("gesturestart", (e) => e.preventDefault());
   document.addEventListener("contextmenu", (e) => e.preventDefault());
 
-  // ---------- Staff menu: hold the top-left corner for 3 seconds ----------
+  // ---------- Logo: tap to refresh, hold 3 seconds for the staff menu ----------
   let holdTimer = null;
-  const hotspot = $("#admin-hotspot");
-  hotspot.addEventListener("pointerdown", () => {
+  let held = false;
+  const logo = $("#logo-btn");
+  logo.addEventListener("pointerdown", () => {
+    held = false;
     holdTimer = setTimeout(async () => {
+      held = true;
       $("#admin-version").textContent = await currentVersion();
       $("#admin-status").textContent = "";
       $("#admin").hidden = false;
     }, 3000);
   });
-  ["pointerup", "pointerleave", "pointercancel"].forEach((ev) => hotspot.addEventListener(ev, () => clearTimeout(holdTimer)));
+  ["pointerup", "pointerleave", "pointercancel"].forEach((ev) => logo.addEventListener(ev, () => clearTimeout(holdTimer)));
+  logo.addEventListener("click", () => { if (!held) refresh(); });
 
   // ---------- Offline + auto-update ----------
   // sw.js carries a build version; every deploy changes it, the new worker installs in the
@@ -435,6 +439,12 @@
     } catch (err) {
       if (fromAdmin) $("#admin-status").textContent = "Offline. The app will update when it’s back online.";
     }
+  }
+
+  // Pick up any new version, then reload. Keeps the offline cache, so it is safe without wifi.
+  async function refresh() {
+    try { if (registration) await Promise.race([registration.update(), new Promise((r) => setTimeout(r, 3000))]); } catch (err) {}
+    location.reload();
   }
 
   async function hardReload() {

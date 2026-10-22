@@ -24,7 +24,9 @@ never gets interrupted mid-demo.
 
 ## Kiosk behavior
 - After 90 seconds without a touch, a 15-second "Still exploring?" countdown appears, then the app resets to the questionnaire.
-- Staff menu: press and hold the top-left corner for 3 seconds. Shows the version, checks for updates, or force-reloads.
+- Refresh: tap the RingCentral logo on the start screen. It grabs any new version and reloads (works offline too).
+- Staff menu: press and hold the logo for 3 seconds. Shows the version, checks for updates, or force-reloads.
+- Status bar: iPadOS always shows the clock and battery over home-screen web apps. To hide it, run the URL in a kiosk browser app such as Kiosk Pro, or mask the top edge with the booth cutout.
 
 ## Local preview
 `python3 -m http.server 8000` then open http://localhost:8000.

@@ -22,6 +22,7 @@ const ASSETS = [
   "assets/img/laptop-orange.jpg",
   "assets/img/laptop-steps.jpg",
   "assets/img/laptop-peach.jpg",
+  "assets/img/noise.png",
   "assets/img/arc-a.svg",
   "assets/img/arc-b.svg",
   "assets/img/arc-c.svg",

@@ -24,7 +24,7 @@
         <img class="arc arc-a" src="assets/img/arc-a.svg" alt="">
         <img class="arc arc-b" src="assets/img/arc-b.svg" alt="">
       </div>
-      <img class="intake-logo" src="assets/icons/logo-mint.svg" alt="RingCentral">
+      <button class="intake-logo" id="logo-btn" aria-label="RingCentral"><img src="assets/icons/logo-mint.svg" alt="RingCentral"></button>
       <button class="close-btn" data-action="restart" aria-label="Start over">
         <img src="assets/icons/close.svg" alt="">
       </button>
@@ -108,8 +108,7 @@
       </div>
     </div>
 
-    <!-- Staff menu: press and hold the top-left corner for 3 seconds -->
-    <div class="admin-hotspot" id="admin-hotspot"></div>
+    <!-- Staff menu: press and hold the logo for 3 seconds. A quick tap on the logo refreshes the app. -->
     <div class="overlay" id="admin" hidden>
       <div class="modal-card">
         <h3>Staff menu</h3>
