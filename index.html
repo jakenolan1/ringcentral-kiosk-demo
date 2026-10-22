@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>RingCentral Demo</title>
+  <meta name="theme-color" content="#10322C">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="RC Demo">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/dm-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="stage">
+    <!-- 1. Questionnaire -->
+    <section class="screen screen-intake is-active" data-screen="intake">
+      <div class="bg-green">
+        <img class="arc arc-a" src="assets/img/arc-a.svg" alt="">
+        <img class="arc arc-b" src="assets/img/arc-b.svg" alt="">
+      </div>
+      <img class="intake-logo" src="assets/icons/logo-mint.svg" alt="RingCentral">
+      <button class="close-btn" data-action="restart" aria-label="Start over">
+        <img src="assets/icons/close.svg" alt="">
+      </button>
+      <div class="intake-body">
+        <div class="intake-content">
+          <p class="eyebrow" data-text="intake.eyebrow"></p>
+          <p class="intake-intro" data-text="intake.intro"></p>
+          <div class="questions" id="questions"></div>
+        </div>
+      </div>
+      <footer class="intake-footer">
+        <button class="pill pill-white" data-action="continue" data-text="intake.continue"></button>
+      </footer>
+    </section>
+
+    <!-- 2. Recommendations -->
+    <section class="screen screen-reco" data-screen="reco">
+      <div class="bg-green">
+        <img class="arc arc-c" src="assets/img/arc-c.svg" alt="">
+        <img class="arc arc-d" src="assets/img/arc-d.svg" alt="">
+      </div>
+      <div class="site-nav" data-nav></div>
+      <header class="reco-head">
+        <p class="eyebrow" data-text="recommendations.eyebrow"></p>
+        <h1 class="reco-title" data-text="recommendations.title"></h1>
+        <p class="reco-sub" id="reco-sub"></p>
+      </header>
+      <div class="reco-lower">
+        <div class="carousel-wrap">
+          <div class="reco-sand"></div>
+          <div class="carousel" id="carousel"></div>
+        </div>
+        <div class="reco-actions">
+          <div class="reco-tools">
+            <button class="tool" data-action="edit"><img src="assets/icons/edit.svg" alt=""><span data-text="recommendations.edit"></span></button>
+            <button class="tool" data-action="share"><img src="assets/icons/share.svg" alt=""><span data-text="recommendations.share"></span></button>
+          </div>
+          <div class="arrows">
+            <button class="arrow" data-action="prev" aria-label="Previous"><svg width="9" height="17"><use href="#i-chev-left"/></svg></button>
+            <button class="arrow" data-action="next" aria-label="Next"><svg width="9" height="17"><use href="#i-chev-right"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Product detail -->
+    <section class="screen screen-detail" data-screen="detail">
+      <div class="detail-scroll" id="detail-scroll">
+        <div class="d-hero"><div class="d-hero-img" id="d-hero-img"></div></div>
+        <div class="d-main" id="d-main">
+          <div class="d-intro" id="d-intro">
+            <button class="back-btn" data-action="back" aria-label="Back to recommendations"><img src="assets/icons/back-arrow.svg" alt=""></button>
+            <div class="d-title-block" id="d-title-block">
+              <h1 class="d-title" id="d-title"></h1>
+              <p class="d-tagline" id="d-tagline"></p>
+              <div class="d-buttons">
+                <button class="pill pill-dark" data-action="handoff" data-text="detail.launchTour"></button>
+                <button class="pill pill-white pill-icon" data-action="handoff"><img src="assets/icons/calendar.svg" alt=""><span data-text="detail.meetExpert"></span></button>
+              </div>
+            </div>
+          </div>
+          <div class="d-panel" id="d-panel"></div>
+        </div>
+        <div class="d-cta" id="d-cta"></div>
+      </div>
+      <div class="site-nav site-nav-fixed" data-nav></div>
+    </section>
+
+    <!-- Overlays -->
+    <div class="overlay" id="modal" hidden>
+      <div class="modal-card">
+        <h3 id="modal-title"></h3>
+        <p id="modal-body"></p>
+        <button class="pill pill-green" data-action="close-modal" id="modal-close"></button>
+      </div>
+    </div>
+    <div class="overlay" id="idle" hidden>
+      <div class="modal-card">
+        <h3 data-text="idle.title"></h3>
+        <p><span data-text="idle.body"></span> <strong id="idle-count"></strong></p>
+        <button class="pill pill-green" data-action="stay" data-text="idle.stay"></button>
+      </div>
+    </div>
+
+    <!-- Staff menu: press and hold the top-left corner for 3 seconds -->
+    <div class="admin-hotspot" id="admin-hotspot"></div>
+    <div class="overlay" id="admin" hidden>
+      <div class="modal-card">
+        <h3>Staff menu</h3>
+        <p>Version <strong id="admin-version">…</strong></p>
+        <div class="admin-actions">
+          <button class="pill pill-outline-dark" data-action="check-update">Check for update</button>
+          <button class="pill pill-outline-dark" data-action="hard-reload">Reload app</button>
+          <button class="pill pill-green" data-action="close-admin">Close</button>
+        </div>
+        <p class="admin-status" id="admin-status"></p>
+      </div>
+    </div>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-chev-left" viewBox="0 0 9 17"><path d="M8.50202 16.8C9.60191 15.7133 9.60288 13.9377 8.50418 12.8498L4.01012 8.4L8.50418 3.95018C9.60288 2.86229 9.60191 1.08669 8.50202 0L0 8.4L8.50202 16.8Z" fill="currentColor"/></symbol>
+    <symbol id="i-chev-right" viewBox="0 0 9 17"><path d="M0.498 0.000782C-0.6019 1.08747 -0.6029 2.86307 0.4958 3.95096L4.9899 8.40078L0.4958 12.8506C-0.6029 13.9385 -0.6019 15.7141 0.498 16.8008L9 8.40078L0.498 0.000782Z" fill="currentColor"/></symbol>
+    <symbol id="i-caret" viewBox="0 0 11 7"><path d="M11 0.547377C10.2923 -0.181926 9.12203 -0.182565 8.41355 0.545966L5.5 3.54198L2.58645 0.545967C1.87797 -0.182564 0.707685 -0.181926 0 0.547377L5.5 6.21539L11 0.547377Z" fill="currentColor"/></symbol>
+  </svg>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
